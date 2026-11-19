@@ -1,0 +1,419 @@
+/* ==========================================================================
+   CAPSON: base.css
+   Reset, typography, layout primitives, buttons, chips, badges, motion helpers.
+   ========================================================================== */
+
+/* 2. Base ------------------------------------------------------------------ */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  scroll-padding-top: calc(var(--header-h) + 16px);
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: var(--step-0);
+  font-weight: var(--fw-regular);
+  line-height: var(--lh-body);
+  color: var(--ink);
+  background: var(--white);
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+img,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+img {
+  height: auto;
+}
+
+/* All headings use the wide display face (Unbounded). */
+h1,
+h2,
+h3,
+h4 {
+  margin: 0 0 0.5em;
+  font-family: var(--font-display);
+  font-weight: var(--fw-display);
+  line-height: var(--lh-heading);
+  letter-spacing: var(--tracking-heading);
+  overflow-wrap: break-word;
+}
+
+h1 {
+  font-weight: var(--fw-display-bold);
+}
+
+p {
+  margin: 0 0 1em;
+}
+
+a {
+  color: inherit;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+}
+
+ul {
+  margin: 0;
+  padding: 0;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+  color: inherit;
+}
+
+:focus-visible {
+  outline: 3px solid var(--water-blue);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+::selection {
+  background: var(--red-ui);
+  color: var(--white);
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.skip-link {
+  position: absolute;
+  left: 16px;
+  top: -100px;
+  z-index: 200;
+  padding: 10px 16px;
+  background: var(--red);
+  color: var(--white);
+  font-weight: 600;
+  border-radius: var(--radius-sm);
+  text-decoration: none;
+}
+
+.skip-link:focus {
+  top: 12px;
+}
+
+/* 3. Layout ---------------------------------------------------------------- */
+/* The single shared content wrapper. Sections themselves are always full-bleed
+   (100% wide backgrounds); only their content sits inside .container. */
+.container {
+  width: min(100% - 2 * var(--gutter), var(--container));
+  margin-inline: auto;
+}
+
+.section {
+  padding-block: clamp(56px, 8vw, 112px);
+}
+
+.section--soft {
+  background: var(--bg-soft);
+}
+
+.section--dark {
+  background: var(--black);
+  color: var(--white);
+}
+
+.section__head {
+  max-width: 720px;
+  margin-bottom: clamp(28px, 4vw, 48px);
+}
+
+.section__head--center {
+  margin-inline: auto;
+  text-align: center;
+}
+
+.section__title {
+  font-size: var(--step-3);
+}
+
+.section__lead {
+  color: var(--muted);
+  font-size: var(--step-1);
+  line-height: 1.55;
+}
+
+.section--dark .section__lead {
+  color: var(--muted-on-dark);
+}
+
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 14px;
+  font-size: var(--step--1);
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--red-ui);
+}
+
+/* On black, the brand red itself passes contrast. */
+.hero .eyebrow,
+.page-hero .eyebrow,
+.section--dark .eyebrow,
+.range .eyebrow,
+.splash .eyebrow {
+  color: var(--red);
+}
+
+.range .section__lead {
+  color: var(--muted-on-dark);
+}
+
+.eyebrow::before {
+  content: '';
+  width: 28px;
+  height: 3px;
+  border-radius: 3px;
+  background: currentColor;
+}
+
+/* Brochure-style handwritten tagline (Merienda is slanted by design: no faux italic). */
+.tagline {
+  font-family: var(--font-accent);
+  font-style: normal;
+  font-weight: var(--fw-regular);
+}
+
+/* 5. Buttons & UI ---------------------------------------------------------- */
+.btn {
+  --btn-bg: var(--red-ui);
+  --btn-fg: var(--white);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  min-height: 48px;
+  padding: 12px 24px;
+  font-weight: 600;
+  font-size: 0.95rem;
+  line-height: 1.2;
+  color: var(--btn-fg);
+  background: var(--btn-bg);
+  border: 2px solid var(--btn-bg);
+  border-radius: 999px;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background 0.25s, color 0.25s, border-color 0.25s, transform 0.25s var(--ease);
+}
+
+.btn:hover {
+  --btn-bg: var(--red-dark);
+  transform: translateY(-2px);
+}
+
+.btn:active {
+  transform: translateY(0);
+}
+
+.btn svg {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+}
+
+.btn--ghost {
+  --btn-bg: transparent;
+  --btn-fg: currentColor;
+  border-color: currentColor;
+}
+
+.btn--ghost:hover {
+  --btn-bg: transparent;
+  color: var(--red);
+  border-color: var(--red);
+}
+
+.btn--dark {
+  --btn-bg: var(--black);
+}
+
+.btn--dark:hover {
+  --btn-bg: var(--ink);
+  border-color: var(--red);
+}
+
+.btn--sm {
+  min-height: 40px;
+  padding: 8px 16px;
+  font-size: 0.875rem;
+}
+
+.btn-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  min-height: 40px;
+  padding: 6px 16px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--ink);
+  background: var(--white);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s, border-color 0.2s;
+}
+
+.chip:hover {
+  border-color: var(--ink);
+}
+
+.chip[aria-pressed='true'] {
+  color: var(--white);
+  background: var(--ink);
+  border-color: var(--ink);
+}
+
+.badge {
+  display: inline-block;
+  padding: 3px 10px;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  border-radius: 999px;
+  background: var(--bg-soft);
+  color: var(--ink);
+}
+
+.badge--upvc {
+  background: #e9ecf1;
+}
+
+.badge--cpvc {
+  background: var(--cpvc-cream);
+}
+
+.badge--agri {
+  background: #d8f1fb;
+  color: #0b5c7c;
+}
+
+/* Satisfaction seal (CSS version of the brochure seal) */
+.seal {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 132px;
+  aspect-ratio: 1;
+  text-align: center;
+  color: var(--black);
+  background: radial-gradient(circle at 35% 30%, #ffe27a, #e0a422 55%, #a86d0c);
+  border-radius: 50%;
+  box-shadow: 0 0 0 6px rgb(224 164 34 / 0.35), var(--shadow-lg);
+}
+
+.seal__inner {
+  display: grid;
+  line-height: 1.05;
+}
+
+.seal strong {
+  font-size: 1.9rem;
+  font-family: var(--font-display);
+  font-weight: var(--fw-display-bold);
+  font-variant-numeric: tabular-nums;
+}
+
+.seal span {
+  font-size: 0.62rem;
+  font-weight: var(--fw-semibold);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.seal__ribbon {
+  margin-top: 4px;
+  padding: 2px 8px;
+  color: var(--white);
+  background: var(--red-ui);
+  border-radius: 3px;
+}
+
+/* 12. Motion helpers ------------------------------------------------------- */
+
+/*
+ * Hero intro items start hidden only on large screens with motion allowed
+ * and JS on. Mobile always paints immediately (keeps LCP fast). If GSAP
+ * fails to load, the fallback animation reveals them after 2.5s.
+ */
+@media (min-width: 1024px) and (prefers-reduced-motion: no-preference) {
+  .js [data-hero-item] {
+    opacity: 0;
+    animation: reveal-fallback 0.6s ease 2.5s forwards;
+  }
+
+  .js.anim-ready [data-hero-item] {
+    animation: none;
+  }
+}
+
+@keyframes reveal-fallback {
+  to {
+    opacity: 1;
+  }
+}
+
+/* SplitText line masks */
+.split-line {
+  overflow: hidden;
+  padding-bottom: 0.08em;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+  }
+}
+
+/* Lenis smooth scroll recommended styles */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+.lenis.lenis-stopped {
+  overflow: hidden;
+}

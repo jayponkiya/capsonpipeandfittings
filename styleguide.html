@@ -1,0 +1,313 @@
+<!doctype html>
+<html lang="en-IN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Styleguide | CAPSON</title>
+  <meta name="description" content="CAPSON design system: colours, type, buttons and components.">
+  <link rel="canonical" href="https://www.capsonpipeandfittings.com/styleguide.html">
+  <meta name="theme-color" content="#0A0A0A">
+  <meta name="robots" content="noindex">
+
+  <!-- Open Graph / social -->
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="CAPSON Pipe &amp; Fittings">
+  <meta property="og:locale" content="en_IN">
+  <meta property="og:title" content="Styleguide | CAPSON">
+  <meta property="og:description" content="CAPSON design system: colours, type, buttons and components.">
+  <meta property="og:url" content="https://www.capsonpipeandfittings.com/styleguide.html">
+  <meta property="og:image" content="https://www.capsonpipeandfittings.com/assets/img/brand/og-image.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="CAPSON logo: Easy to Flow Forever">
+  <meta name="twitter:card" content="summary_large_image">
+
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/img/brand/favicon-32.png">
+  <link rel="apple-touch-icon" href="assets/img/brand/favicon-180.png">
+  <link rel="manifest" href="site.webmanifest">
+
+  <!-- Fonts: Unbounded (display) · Outfit (body/UI) · Merienda (tagline). One stylesheet,
+       loaded without blocking first paint; the noscript copy is the same URL for no-JS visitors. -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Merienda:wght@400&amp;family=Outfit:wght@300;400;500;600&amp;family=Unbounded:wght@500;700&amp;display=swap" media="print" onload="this.media='all'">
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Merienda:wght@400&amp;family=Outfit:wght@300;400;500;600&amp;family=Unbounded:wght@500;700&amp;display=swap"></noscript>
+
+  <link rel="stylesheet" href="css/tokens.css">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/components.css">
+  <!-- js class + cover the page from first paint when arriving via a page transition -->
+  <!-- js class; page-transition cover; preloader only on the first page of a visit -->
+  <script>!function(d){d.classList.add('js');try{var r=matchMedia('(prefers-reduced-motion: reduce)').matches,s=sessionStorage;s.getItem('capson:wipe')&&!r&&d.classList.add('is-wiping');if(!r&&!s.getItem('capson:seen')&&!s.getItem('capson:wipe'))d.classList.add('is-preloading');s.setItem('capson:seen','1')}catch(e){}}(document.documentElement);</script>
+
+  <!-- Motion libraries (deferred; site works without them) -->
+  <script defer src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/Flip.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/SplitText.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/lenis@1.3.4/dist/lenis.min.js"></script>
+  <script type="module" src="js/main.js"></script>
+</head>
+<body>
+  <!-- Preloader (first page of a visit only; removed by js/preloader.js) -->
+  <div class="preloader" data-preloader aria-hidden="true">
+    <div class="preloader__inner">
+      <img class="preloader__logo" src="assets/img/brand/logo-240.webp" alt="" width="240" height="158">
+      <div class="preloader__pipe"><span class="preloader__water" data-preloader-water></span></div>
+      <p class="preloader__tagline">Easy to Flow Forever</p>
+    </div>
+    <div class="preloader__swoosh preloader__swoosh--dark"></div>
+    <div class="preloader__swoosh preloader__swoosh--red"></div>
+  </div>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <!-- Header, mega menu and mobile drawer are injected by js/layout.js -->
+  <div data-site-header></div>
+  <noscript>
+    <nav class="noscript-nav" aria-label="Main">
+      <a href="index.html">Home</a><a href="upvc.html">UPVC</a><a href="cpvc.html">CPVC</a><a href="agri.html">Agri Pipes</a><a href="products.html">Products</a><a href="catalogue.html">Catalogue</a><a href="about.html">About</a><a href="why-capson.html">Why Capson</a><a href="contact.html">Contact</a>
+    </nav>
+  </noscript>
+
+  <main id="main">
+
+    <section class="page-hero page-hero--plain">
+      <div class="container page-hero__inner">
+        <nav class="breadcrumb" aria-label="Breadcrumb">
+          <ol>
+            <li><a href="index.html">Home</a></li>
+            <li aria-current="page">Styleguide</li>
+          </ol>
+        </nav>
+        <p class="eyebrow" data-hero-item>Design system · v1</p>
+        <h1 data-hero-item data-split>CAPSON styleguide</h1>
+        <p data-hero-item>Colours, type, buttons and components used across the site. Everything here is the live CSS from css/tokens.css, base.css and components.css.</p>
+        
+      </div>
+      
+  <svg class="hero__swoosh " viewBox="0 0 1440 260" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+    <path class="swoosh-dark" d="M0 140C300 30 760 0 1440 190L1440 230C820 60 330 90 0 190Z"/>
+    <path class="swoosh-red" d="M0 190C330 90 820 60 1440 230L1440 250C820 105 340 140 0 235Z"/>
+    <path class="swoosh-base" d="M0 235C340 140 820 105 1440 250L1440 260L0 260Z"/>
+  </svg>
+    </section>
+    <div data-styleguide>
+    <section class="section sg-section" aria-labelledby="sg-colors">
+      <div class="container">
+        <p class="eyebrow">01 · Colour</p>
+        <h2 class="section__title" id="sg-colors">Colour</h2>
+        <p class="section__lead">From the logo and brochure. Contrast ratios are measured live against white and black text (AA needs 4.5:1 for body text).</p>
+        <ul class="sg-swatches">
+          
+          <li class="sg-swatch" data-swatch="--red">
+            <span class="sg-swatch__chip" data-chip></span>
+            <span class="sg-swatch__meta"><strong>Capson Red</strong><code>var(--red)</code> <span data-hex></span></span>
+            <span class="sg-swatch__role">Brand red: swooshes, accents, red on black</span>
+            <span class="sg-swatch__contrast" data-contrast></span>
+          </li>
+          
+          <li class="sg-swatch" data-swatch="--red-ui">
+            <span class="sg-swatch__chip" data-chip></span>
+            <span class="sg-swatch__meta"><strong>Red (UI)</strong><code>var(--red-ui)</code> <span data-hex></span></span>
+            <span class="sg-swatch__role">Buttons and small red text on light backgrounds</span>
+            <span class="sg-swatch__contrast" data-contrast></span>
+          </li>
+          
+          <li class="sg-swatch" data-swatch="--red-dark">
+            <span class="sg-swatch__chip" data-chip></span>
+            <span class="sg-swatch__meta"><strong>Red Dark</strong><code>var(--red-dark)</code> <span data-hex></span></span>
+            <span class="sg-swatch__role">Hover states, deep swoosh band</span>
+            <span class="sg-swatch__contrast" data-contrast></span>
+          </li>
+          
+          <li class="sg-swatch" data-swatch="--black">
+            <span class="sg-swatch__chip" data-chip></span>
+            <span class="sg-swatch__meta"><strong>Black</strong><code>var(--black)</code> <span data-hex></span></span>
+            <span class="sg-swatch__role">Hero, header, footer, dark sections</span>
+            <span class="sg-swatch__contrast" data-contrast></span>
+          </li>
+          
+          <li class="sg-swatch" data-swatch="--ink">
+            <span class="sg-swatch__chip" data-chip></span>
+            <span class="sg-swatch__meta"><strong>Ink</strong><code>var(--ink)</code> <span data-hex></span></span>
+            <span class="sg-swatch__role">Body text, dark cards</span>
+            <span class="sg-swatch__contrast" data-contrast></span>
+          </li>
+          
+          <li class="sg-swatch" data-swatch="--white">
+            <span class="sg-swatch__chip" data-chip></span>
+            <span class="sg-swatch__meta"><strong>White</strong><code>var(--white)</code> <span data-hex></span></span>
+            <span class="sg-swatch__role">Page background, text on dark</span>
+            <span class="sg-swatch__contrast" data-contrast></span>
+          </li>
+          
+          <li class="sg-swatch" data-swatch="--bg-soft">
+            <span class="sg-swatch__chip" data-chip></span>
+            <span class="sg-swatch__meta"><strong>Soft Grey</strong><code>var(--bg-soft)</code> <span data-hex></span></span>
+            <span class="sg-swatch__role">Alternate section background</span>
+            <span class="sg-swatch__contrast" data-contrast></span>
+          </li>
+          
+          <li class="sg-swatch" data-swatch="--cpvc-cream">
+            <span class="sg-swatch__chip" data-chip></span>
+            <span class="sg-swatch__meta"><strong>CPVC Cream</strong><code>var(--cpvc-cream)</code> <span data-hex></span></span>
+            <span class="sg-swatch__role">CPVC line accent</span>
+            <span class="sg-swatch__contrast" data-contrast></span>
+          </li>
+          
+          <li class="sg-swatch" data-swatch="--water-blue">
+            <span class="sg-swatch__chip" data-chip></span>
+            <span class="sg-swatch__meta"><strong>Water Blue</strong><code>var(--water-blue)</code> <span data-hex></span></span>
+            <span class="sg-swatch__role">Agri accent, focus ring, flow line</span>
+            <span class="sg-swatch__contrast" data-contrast></span>
+          </li>
+          
+          <li class="sg-swatch" data-swatch="--muted">
+            <span class="sg-swatch__chip" data-chip></span>
+            <span class="sg-swatch__meta"><strong>Muted</strong><code>var(--muted)</code> <span data-hex></span></span>
+            <span class="sg-swatch__role">Secondary text on light</span>
+            <span class="sg-swatch__contrast" data-contrast></span>
+          </li>
+          
+          <li class="sg-swatch" data-swatch="--muted-on-dark">
+            <span class="sg-swatch__chip" data-chip></span>
+            <span class="sg-swatch__meta"><strong>Muted on dark</strong><code>var(--muted-on-dark)</code> <span data-hex></span></span>
+            <span class="sg-swatch__role">Secondary text on black</span>
+            <span class="sg-swatch__contrast" data-contrast></span>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="section section--soft sg-section" aria-labelledby="sg-type">
+      <div class="container">
+        <p class="eyebrow">02 · Type</p>
+        <h2 class="section__title" id="sg-type">Typography</h2>
+        <div class="sg-type">
+          <div class="sg-type__row"><span class="sg-label">H1 · Unbounded 700</span><p class="sg-h1">Easy to Flow Forever</p></div>
+          <div class="sg-type__row"><span class="sg-label">H2 · Unbounded 500</span><p class="sg-h2">UPVC &amp; CPVC Pipes and Fittings</p></div>
+          <div class="sg-type__row"><span class="sg-label">H3 · Unbounded 500</span><p class="sg-h3">Hot &amp; cold water plumbing</p></div>
+          <div class="sg-type__row"><span class="sg-label">Tagline · Merienda 400</span><p class="sg-tagline">Easy to Flow Forever<sup>®</sup></p></div>
+          <div class="sg-type__row"><span class="sg-label">Eyebrow</span><p class="eyebrow">Mfd. by Shreenath Polytech</p></div>
+          <div class="sg-type__row"><span class="sg-label">Lead</span><p class="section__lead">Browse every product with sizes and packing, then send your list to us on WhatsApp.</p></div>
+          <div class="sg-type__row"><span class="sg-label">Body · Outfit 400</span><p>CAPSON pipes and fittings are manufactured by Shreenath Polytech in Shapar, Rajkot. <a href="#sg-type">Inline link</a>.</p></div>
+          <div class="sg-type__row"><span class="sg-label">Outfit weights</span><p class="sg-weights"><span class="sg-body-light">Light 300</span><span>Regular 400</span><span class="sg-w500">Medium 500</span><strong>Semibold 600</strong></p></div>
+          <div class="sg-type__row"><span class="sg-label">Numbers · Outfit tabular</span><p class="sg-nums">1,600 · 2,400 · 11.08 · 100X10=1000</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section sg-section" aria-labelledby="sg-buttons">
+      <div class="container">
+        <p class="eyebrow">03 · Controls</p>
+        <h2 class="section__title" id="sg-buttons">Buttons, chips &amp; badges</h2>
+        <div class="sg-grid-2">
+          <div class="card">
+            <h3>On light</h3>
+            <div class="btn-row">
+              <a class="btn" href="contact.html" data-wa><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.47 14.38c-.3-.15-1.76-.87-2.03-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.94 1.16-.17.2-.35.22-.64.07-.3-.15-1.26-.46-2.39-1.47-.88-.79-1.48-1.76-1.65-2.06-.17-.3-.02-.46.13-.6.13-.14.3-.35.45-.52.15-.18.2-.3.3-.5.1-.2.05-.37-.03-.52-.07-.15-.67-1.61-.92-2.2-.24-.58-.49-.5-.67-.51h-.57c-.2 0-.52.07-.79.37-.27.3-1.04 1.02-1.04 2.48s1.07 2.88 1.21 3.07c.15.2 2.1 3.2 5.08 4.49.71.31 1.26.49 1.7.63.71.22 1.36.19 1.87.12.57-.09 1.76-.72 2-1.41.25-.7.25-1.29.18-1.41-.08-.13-.28-.2-.57-.35M12.05 21.78h-.01a9.87 9.87 0 0 1-5.03-1.38l-.36-.21-3.74.98 1-3.65-.24-.37a9.86 9.86 0 0 1-1.51-5.26c0-5.45 4.44-9.88 9.89-9.88 2.64 0 5.12 1.03 6.99 2.9a9.83 9.83 0 0 1 2.89 6.99c0 5.45-4.44 9.88-9.88 9.88m8.41-18.3A11.82 11.82 0 0 0 12.05 0C5.5 0 .16 5.34.16 11.89c0 2.1.55 4.14 1.59 5.95L.06 24l6.3-1.65a11.88 11.88 0 0 0 5.68 1.45h.01c6.55 0 11.89-5.34 11.89-11.89a11.82 11.82 0 0 0-3.48-8.41z"/></svg>Get Quote</a>
+              <a class="btn btn--dark" href="#sg-buttons">Dark</a>
+              <a class="btn btn--ghost" href="#sg-buttons">Ghost</a>
+              <a class="btn btn--sm" href="#sg-buttons">Small</a>
+            </div>
+            <div class="chips sg-block" role="group" aria-label="Chip examples">
+              <button class="chip" type="button" aria-pressed="true">All types</button>
+              <button class="chip" type="button" aria-pressed="false">Pipes</button>
+              <button class="chip" type="button" aria-pressed="false">Fittings</button>
+            </div>
+            <p class="sg-block"><span class="badge badge--upvc">UPVC</span> <span class="badge badge--cpvc">CPVC</span> <span class="badge badge--agri">Agri</span></p>
+          </div>
+          <div class="card card--dark">
+            <h3>On dark</h3>
+            <div class="btn-row sg-on-dark">
+              <a class="btn" href="contact.html" data-wa><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.47 14.38c-.3-.15-1.76-.87-2.03-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.94 1.16-.17.2-.35.22-.64.07-.3-.15-1.26-.46-2.39-1.47-.88-.79-1.48-1.76-1.65-2.06-.17-.3-.02-.46.13-.6.13-.14.3-.35.45-.52.15-.18.2-.3.3-.5.1-.2.05-.37-.03-.52-.07-.15-.67-1.61-.92-2.2-.24-.58-.49-.5-.67-.51h-.57c-.2 0-.52.07-.79.37-.27.3-1.04 1.02-1.04 2.48s1.07 2.88 1.21 3.07c.15.2 2.1 3.2 5.08 4.49.71.31 1.26.49 1.7.63.71.22 1.36.19 1.87.12.57-.09 1.76-.72 2-1.41.25-.7.25-1.29.18-1.41-.08-.13-.28-.2-.57-.35M12.05 21.78h-.01a9.87 9.87 0 0 1-5.03-1.38l-.36-.21-3.74.98 1-3.65-.24-.37a9.86 9.86 0 0 1-1.51-5.26c0-5.45 4.44-9.88 9.89-9.88 2.64 0 5.12 1.03 6.99 2.9a9.83 9.83 0 0 1 2.89 6.99c0 5.45-4.44 9.88-9.88 9.88m8.41-18.3A11.82 11.82 0 0 0 12.05 0C5.5 0 .16 5.34.16 11.89c0 2.1.55 4.14 1.59 5.95L.06 24l6.3-1.65a11.88 11.88 0 0 0 5.68 1.45h.01c6.55 0 11.89-5.34 11.89-11.89a11.82 11.82 0 0 0-3.48-8.41z"/></svg>Get Quote</a>
+              <a class="btn btn--ghost" href="#sg-buttons">Ghost</a>
+            </div>
+            <ul class="hero__lines">
+              <li><a class="ribbon" href="upvc.html"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20zm-1.2 14.2-4-4 1.4-1.4 2.6 2.6 5.6-5.6 1.4 1.4-7 7z"/></svg>UPVC Pipes &amp; Fittings</a></li>
+              <li><a class="ribbon" href="cpvc.html"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20zm-1.2 14.2-4-4 1.4-1.4 2.6 2.6 5.6-5.6 1.4 1.4-7 7z"/></svg>CPVC Pipes &amp; Fittings</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section--soft sg-section" aria-labelledby="sg-cards">
+      <div class="container">
+        <p class="eyebrow">04 · Cards</p>
+        <h2 class="section__title" id="sg-cards">Cards</h2>
+        <h3 class="sg-sub">Product card (rendered from data/products.js)</h3>
+        <div class="grid" data-sg-cards></div>
+        <h3 class="sg-sub">Product line card</h3>
+
+      <div class="lines">
+        <a class="line-card line-card--upvc" href="upvc.html" data-reveal>
+          <div class="line-card__media" data-mask><img data-parallax="14" src="assets/img/products/upvc-pipe-sch-40.webp" alt="White UPVC pipes with blue and red stripes" width="389" height="460" loading="lazy" decoding="async"></div>
+          <div class="line-card__body">
+            <h3>UPVC Pipes &amp; Fittings</h3>
+            <p>SCH-40 &amp; SCH-80 pipes, plain and brass fittings, ball and concealed valves, tank nipples, clamps and solvent.</p>
+            <div class="line-card__meta"><span class="line-card__count" data-line-count="upvc">32 products</span><span class="line-card__arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></div>
+          </div>
+        </a>
+        <a class="line-card line-card--cpvc" href="cpvc.html" data-reveal>
+          <div class="line-card__media" data-mask><img data-parallax="14" src="assets/img/products/cpvc-pipe-sdr-11.webp" alt="Cream CPVC pipes with red stripe" width="389" height="460" loading="lazy" decoding="async"></div>
+          <div class="line-card__body">
+            <h3>CPVC Pipes &amp; Fittings</h3>
+            <p>SDR-11 &amp; SDR-13.5 pipes with fittings, brass fittings, valves and solvent for hot &amp; cold water.</p>
+            <div class="line-card__meta"><span class="line-card__count" data-line-count="cpvc">24 products</span><span class="line-card__arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></div>
+          </div>
+        </a>
+        <a class="line-card line-card--garden" href="agri.html" data-reveal>
+          <div class="line-card__media" data-mask><img data-parallax="14" src="assets/img/products/garden-colour-virgin.webp" alt="Coils of coloured transparent garden pipe" width="244" height="295" loading="lazy" decoding="async"></div>
+          <div class="line-card__body">
+            <h3>Agri &amp; Garden Pipes</h3>
+            <p>Transparent, Zibra, Petrol, Halwa/Dual, Blue Metallic, Colour Virgin, Contractor and Level pipes.</p>
+            <div class="line-card__meta"><span class="line-card__count" data-line-count="agri">6 products</span><span class="line-card__arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></div>
+          </div>
+        </a>
+      </div>
+        <h3 class="sg-sub">Facts</h3>
+        <div class="facts">
+          <div class="fact"><span class="fact__value">2017</span><span class="fact__label">Established</span></div>
+          <div class="fact"><span class="fact__value" data-count="all">62</span><span class="fact__label">Products</span></div>
+          <div class="fact"><span class="fact__value">3</span><span class="fact__label">Product lines</span></div>
+          <div class="fact"><span class="fact__value">¼″–2″</span><span class="fact__label">Size range</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section sg-section" aria-labelledby="sg-table">
+      <div class="container">
+        <p class="eyebrow">05 · Data</p>
+        <h2 class="section__title" id="sg-table">Spec table &amp; form fields</h2>
+        <div class="sg-grid-2">
+          <div data-sg-table></div>
+          <form class="form card" aria-label="Form field examples" data-sg-form novalidate>
+            <div class="field"><label for="sg-name">Text input</label><input id="sg-name" type="text" placeholder="Your name"></div>
+            <div class="field"><label for="sg-line">Select</label><select id="sg-line"><option>UPVC Pipes &amp; Fittings</option><option>CPVC Pipes &amp; Fittings</option></select></div>
+            <div class="field"><label for="sg-msg">Textarea</label><textarea id="sg-msg" rows="3" placeholder="Items and sizes"></textarea></div>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section--dark sg-section" aria-labelledby="sg-imagery">
+      <div class="container">
+        <p class="eyebrow">06 · Imagery</p>
+        <h2 class="section__title" id="sg-imagery">Imagery</h2>
+        <p class="section__lead">Product photos cut out from the catalogue as transparent WebP.</p>
+        <div class="sg-imagery">
+          <figure><img src="assets/img/brand/hero-upvc-set-700.webp" width="1400" height="1189" alt="UPVC pipes and fittings group" loading="lazy" decoding="async"><figcaption>hero-upvc-set</figcaption></figure>
+          <figure><img src="assets/img/brand/hero-cpvc-set-700.webp" width="1400" height="1002" alt="CPVC pipes and fittings group" loading="lazy" decoding="async"><figcaption>hero-cpvc-set</figcaption></figure>
+          <figure><img src="assets/img/brand/hero-garden-coils-700.webp" width="992" height="790" alt="Garden pipe coils" loading="lazy" decoding="async"><figcaption>hero-garden-coils</figcaption></figure>
+          <figure><img src="assets/img/brand/badge-satisfaction.webp" width="527" height="533" alt="100% Satisfaction Guaranteed badge" loading="lazy" decoding="async"><figcaption>badge-satisfaction</figcaption></figure>
+        </div>
+      </div>
+    </section>
+    </div>
+  </main>
+
+  <!-- Footer and floating WhatsApp button are injected by js/layout.js -->
+  <div data-site-footer></div>
+</body>
+</html>

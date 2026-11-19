@@ -1,0 +1,116 @@
+/* ==========================================================================
+   CAPSON: tokens.css
+   Fonts, colours, spacing, type scale. Values from CLAUDE.md.
+   This is the ONLY file that names font families; everything else uses the
+   --font-* variables below.
+   ========================================================================== */
+
+/* Load-time metric fallbacks ------------------------------------------------
+   Never visible as a design choice: until the Google Fonts arrive, the browser draws
+   text with the local system face, scaled to the web font's width and height so
+   nothing rewraps or jumps when the real font swaps in (prevents layout shift).
+   Ratios measured on real headings and body text against the loaded fonts. */
+@font-face {
+  font-family: 'Unbounded Fallback';
+  src: local('Arial');
+  font-weight: 500;
+  size-adjust: 133%;
+  ascent-override: 76%;
+  descent-override: 19%;
+  line-gap-override: 0%;
+}
+
+@font-face {
+  font-family: 'Unbounded Fallback';
+  src: local('Arial Bold'), local('Arial-BoldMT');
+  font-weight: 700;
+  size-adjust: 128.6%;
+  ascent-override: 76.3%;
+  descent-override: 19.1%;
+  line-gap-override: 0%;
+}
+
+@font-face {
+  font-family: 'Outfit Fallback';
+  src: local('Arial');
+  size-adjust: 97.7%;
+  ascent-override: 102.3%;
+  descent-override: 26.6%;
+  line-gap-override: 0%;
+}
+
+:root {
+  /* Colour ----------------------------------------------------------------- */
+  --red: #ed1c24;
+  --red-dark: #a50e14;
+  /* Slightly deeper brand red for text & buttons on light backgrounds (WCAG AA 4.5:1). */
+  --red-ui: #d4171e;
+  --black: #0a0a0a;
+  --ink: #141414;
+  --white: #ffffff;
+  --bg-soft: #f3f4f6;
+  --cpvc-cream: #d8c6a0;
+  --water-blue: #1fa2d8;
+
+  --muted: #5b6270;
+  --muted-on-dark: #b5b8bf;
+  --line: #e3e5ea;
+  --line-dark: #2a2a2a;
+
+  /* Type: loaded from Google Fonts in each page head -------------------------
+     Unbounded 500/700 · Outfit 300/400/500/600 · Merienda 400 */
+  --font-display: 'Unbounded', 'Unbounded Fallback', sans-serif;
+  --font-body: 'Outfit', 'Outfit Fallback', sans-serif;
+  --font-accent: 'Merienda', cursive;
+
+  --fw-display: 500;
+  --fw-display-bold: 700;
+  --fw-light: 300;
+  --fw-regular: 400;
+  --fw-medium: 500;
+  --fw-semibold: 600;
+
+  --lh-heading: 1.15;
+  --lh-body: 1.6;
+  --tracking-heading: -0.01em;
+
+  /* Fluid type scale. Headings are ~12% smaller than the previous scale
+     because Unbounded is wide. */
+  --step--1: clamp(0.8rem, 0.78rem + 0.1vw, 0.875rem);
+  --step-0: clamp(0.95rem, 0.92rem + 0.15vw, 1.0625rem);
+  --step-1: clamp(1.05rem, 0.97rem + 0.35vw, 1.25rem);
+  --step-2: clamp(1.2rem, 1.03rem + 0.75vw, 1.65rem);
+  --step-3: clamp(1.4rem, 1.12rem + 1.35vw, 2.25rem);
+  --step-4: clamp(1.6rem, 1.15rem + 2.3vw, 3.1rem);
+
+  /* Shape & layout --------------------------------------------------------- */
+  --radius-sm: 6px;
+  --radius: 12px;
+  --radius-lg: 20px;
+  --shadow: 0 10px 30px rgb(10 10 10 / 0.08);
+  --shadow-lg: 0 24px 60px rgb(10 10 10 / 0.18);
+
+  /* One shared content wrapper: .container = min(100% - 2*gutter, --container). */
+  --container: 1440px;
+  --gutter: 24px;
+  --header-h: 68px;
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@media (min-width: 768px) {
+  :root {
+    --header-h: 80px;
+  }
+}
+
+@media (min-width: 1024px) {
+  :root {
+    --gutter: 48px;
+  }
+}
+
+@media (min-width: 1600px) {
+  :root {
+    --gutter: 80px;
+  }
+}
