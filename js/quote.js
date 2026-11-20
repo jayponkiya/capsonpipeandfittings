@@ -80,6 +80,9 @@ window.addEventListener('storage', (e) => {
 
 /* ---------- Helpers ---------- */
 const motionOK = () => window.gsap && !isLiteMotion();
+/** Phones (<= 768px): the drawer is a bottom sheet (see css/mobile.css), so it slides up. */
+const sheetMode = () => matchMedia('(max-width: 768px)').matches;
+const hiddenPos = () => (sheetMode() ? { yPercent: 100, xPercent: 0 } : { xPercent: 100, yPercent: 0 });
 const named = () => items.map((it) => ({ ...it, name: getProduct(it.slug).name }));
 
 /* ---------- Qty steppers + Add to Quote (delegated, works on pages and in modals) ---------- */
@@ -208,7 +211,7 @@ function initDrawer() {
       drawer.hidden = false;
       overlay.hidden = false;
       if (motionOK()) {
-        window.gsap.fromTo(drawer, { xPercent: 100 }, { xPercent: 0, duration: 0.45, ease: 'power3.out' });
+        window.gsap.fromTo(drawer, hiddenPos(), { xPercent: 0, yPercent: 0, duration: 0.45, ease: 'power3.out' });
         window.gsap.fromTo(overlay, { opacity: 0 }, { opacity: 1, duration: 0.3 });
         window.gsap.from($$('.quote-item', drawer), { x: 24, opacity: 0, stagger: 0.04, duration: 0.3, delay: 0.15 });
       }
@@ -220,7 +223,7 @@ function initDrawer() {
       };
       if (motionOK()) {
         window.gsap.to(overlay, { opacity: 0, duration: 0.25 });
-        window.gsap.to(drawer, { xPercent: 100, duration: 0.35, ease: 'power2.in', onComplete: done });
+        window.gsap.to(drawer, { ...hiddenPos(), duration: 0.35, ease: 'power2.in', onComplete: done });
       } else done();
       opener?.focus?.();
     }

@@ -4,9 +4,9 @@
 export const CONFIG = {
   /**
    * WhatsApp number in international format, digits only (no +, spaces or dashes).
-   * PLACEHOLDER: replace with the owner's real number, e.g. '919876543210'.
+   * Owner's number: +91 96381 72211.
    */
-  WHATSAPP_NUMBER: '91XXXXXXXXXX',
+  WHATSAPP_NUMBER: '919638172211',
 
   /** Show catalogue dealer rates (₹, GST extra) in spec tables. Default: hidden. */
   SHOW_PRICES: false,

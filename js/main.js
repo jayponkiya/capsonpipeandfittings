@@ -43,6 +43,17 @@ async function boot() {
   fillData();
 
   const tasks = [];
+
+  // App-style mobile shell (<= 768px only). Loaded on demand, and again if the window is
+  // later narrowed into the mobile range; js/mobile.js tears itself down above it.
+  const phone = matchMedia('(max-width: 768px)');
+  const loadMobile = () =>
+    import('./mobile.js')
+      .then((m) => m.initMobile(phone))
+      .catch((err) => console.error('[CAPSON] mobile shell failed to start', err)); // allSettled below would hide it
+  if (phone.matches) tasks.push(loadMobile());
+  else phone.addEventListener('change', (e) => e.matches && loadMobile(), { once: true });
+
   const catalogue = $('[data-catalogue]');
   if (catalogue) tasks.push(import('./catalogue.js').then((m) => m.initCatalogue(catalogue)));
 

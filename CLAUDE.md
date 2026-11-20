@@ -7,7 +7,7 @@
 - Address: Plot No 15, SR No. 452/3, Nr Jay Sardar Starch, Shapar, Kotda Sangani, Rajkot - 360024, Gujarat
 - Established 2017 (Sole Proprietorship), GST No. 24CICPP9418B1ZF, team up to 10 people
 - Email: dpsmart94@gmail.com
-- WhatsApp number: PLACEHOLDER 91XXXXXXXXXX (single constant in js/config.js; owner will give real number)
+- WhatsApp number: +91 96381 72211 (WHATSAPP_NUMBER = 919638172211, single constant in js/config.js)
 - Brochure promise: "100% Satisfaction Guaranteed", "UPVC & CPVC pipe and fitting for hot & cold water plumbing solution"
 - Terms from brochure: GST extra, Rajkot jurisdiction, advance/immediate payment only, goods sent by transport at buyer's risk, packing & forwarding extra, E&OE.
 - Map: https://maps.google.com?q=22.16376,70.78683
@@ -22,6 +22,10 @@
 - GSAP 3 + ScrollTrigger (+ SplitText, now free) + Lenis smooth scroll, loaded from jsDelivr CDN.
 - All product data lives in data/products.js (single source of truth). Pages render from it.
 - Multi-page site (real .html files per page, each with its own <title>, meta description, OG tags).
+- Phones (<= 768px) get an app-style shell: css/mobile.css (linked with media="(max-width: 768px)",
+  the only place for phone-only styles) + js/mobile.js (loaded by main.js via matchMedia only).
+  Anything it injects has class .m-only (hidden >= 769px in components.css). Desktop (>= 769px)
+  must stay unchanged: never put phone rules in components.css.
 
 ## Design tokens (from the logo + brochure)
 --red: #ED1C24; --red-dark: #A50E14; --black: #0A0A0A; --ink: #141414;

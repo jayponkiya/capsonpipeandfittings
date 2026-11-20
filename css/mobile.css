@@ -1,0 +1,2033 @@
+/* ==========================================================================
+   CAPSON: mobile.css — app-style phone layer (<= 768px)
+
+   Linked after components.css with media="(max-width: 768px)", so none of this can
+   reach desktop (>= 769px). It is the single home for phone-only styles: the old
+   max-width 719/639/419/400px blocks from components.css were merged in here.
+
+   Two kinds of rules:
+   - plain rules: compact type, spacing and layout (work without JS);
+   - .m-app rules: the JS app shell (js/mobile.js adds html.m-app): tab bar padding,
+     sheets, skeletons, sections replaced by the shell.
+   Colours and fonts only come from tokens.css variables.
+   ========================================================================== */
+
+/* 1. Tokens: smaller, tighter scale ---------------------------------------- */
+:root {
+  --gutter: 16px;
+  --safe-t: env(safe-area-inset-top, 0px);
+  --safe-b: env(safe-area-inset-bottom, 0px);
+  --appbar-h: 56px;
+  --header-h: calc(var(--appbar-h) + var(--safe-t));
+  --tabbar-h: 64px;
+  --tabbar-total: calc(var(--tabbar-h) + var(--safe-b));
+
+  --step--1: 12px;
+  --step-0: 14px;
+  --step-1: 15px;
+  --step-2: 17px;
+  --step-3: 21px;
+  --step-4: 27px;
+  --lh-body: 1.5;
+
+  --m-radius: 16px;
+  --m-line: #e7e9ed;
+  --m-bg: var(--bg-soft);
+  --m-shadow: 0 1px 2px rgb(10 10 10 / 0.04), 0 4px 14px rgb(10 10 10 / 0.06);
+  --m-shadow-up: 0 -12px 40px rgb(0 0 0 / 0.28);
+  --m-section: 40px;
+  --m-gap: 12px;
+  --m-tap: 0.12s;
+}
+
+html {
+  font-size: 14px;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+
+body {
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+h1,
+.hero--home .hero__title,
+.page-hero h1 {
+  font-size: 27px;
+  line-height: 1.15;
+}
+
+h2,
+.section__title {
+  font-size: 21px;
+}
+
+h3 {
+  font-size: 16px;
+}
+
+small,
+.small {
+  font-size: 12px;
+}
+
+.eyebrow {
+  gap: 10px;
+  margin-bottom: 10px;
+  font-size: 11px;
+  letter-spacing: 0.14em;
+}
+
+.section {
+  padding-block: var(--m-section);
+}
+
+.section__head {
+  margin-bottom: 20px;
+}
+
+.section__head--split {
+  gap: 12px;
+}
+
+.section__lead {
+  font-size: 14px;
+}
+
+/* Buttons: 44px touch target, 12px radius, no hover lift on touch. */
+.btn {
+  gap: 8px;
+  min-height: 44px;
+  padding: 10px 18px;
+  font-size: 14px;
+  border-radius: 12px;
+}
+
+.btn--sm {
+  min-height: 44px;
+  padding: 8px 14px;
+  font-size: 13px;
+}
+
+.btn svg {
+  width: 18px;
+  height: 18px;
+}
+
+.btn:hover,
+.product-card:hover,
+.range-card:hover {
+  transform: none;
+}
+
+.btn-row {
+  gap: 10px;
+}
+
+/* Tap feedback: quick press-in on everything tappable. */
+:is(.btn, .tabbar__item, .product-card, .m-chip, .filter-option, .sheet-tile, .sheet-all,
+  .quote-btn, .m-icon-btn, .product-card__add, .m-result, .m-contact__btn, .m-search__chip,
+  .qty__btn, .cat-tile, .quick-link) {
+  transition: transform var(--m-tap) ease-out, background-color 0.2s, color 0.2s, border-color 0.2s, box-shadow 0.2s;
+}
+
+:is(.btn, .tabbar__item, .product-card, .m-chip, .filter-option, .sheet-tile, .sheet-all,
+  .quote-btn, .m-icon-btn, .product-card__add, .m-result, .m-contact__btn, .m-search__chip,
+  .qty__btn, .cat-tile, .quick-link):active {
+  transform: scale(0.97);
+}
+
+/* 2. App shell -------------------------------------------------------------- */
+/* Space for the tab bar: under the (dark) footer, so no white strip shows below it. */
+.m-app .site-footer {
+  padding-bottom: var(--tabbar-total);
+}
+
+/* App bar: 56px, logo left, search + quote right (hamburger lives in the tab bar now). */
+.site-header {
+  height: var(--header-h);
+}
+
+.header__bar {
+  height: var(--header-h);
+  padding-top: var(--safe-t);
+  background: rgb(10 10 10 / 0.86);
+  backdrop-filter: blur(14px) saturate(140%);
+  -webkit-backdrop-filter: blur(14px) saturate(140%);
+}
+
+.site-header.is-solid .header__bar {
+  box-shadow: 0 6px 20px rgb(0 0 0 / 0.3);
+}
+
+.header__inner {
+  gap: 8px;
+}
+
+.brand {
+  align-items: center;
+  min-height: 44px;
+}
+
+.brand img {
+  height: 38px;
+}
+
+.skip-link {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+}
+
+.header__actions {
+  gap: 6px;
+}
+
+.m-app .menu-toggle,
+.m-app .drawer {
+  display: none;
+}
+
+.quote-btn,
+.m-icon-btn,
+.menu-toggle {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  color: var(--white);
+  background: rgb(255 255 255 / 0.06);
+  border: 1px solid rgb(255 255 255 / 0.14);
+  border-radius: 12px;
+  cursor: pointer;
+}
+
+.quote-btn svg,
+.m-icon-btn svg {
+  width: 20px;
+  height: 20px;
+}
+
+.quote-btn__count {
+  position: absolute;
+  top: -5px;
+  right: -5px;
+}
+
+/* Bottom tab bar */
+.tabbar {
+  position: fixed;
+  inset: auto 0 0;
+  z-index: 120;
+  height: var(--tabbar-total);
+  padding-bottom: var(--safe-b);
+  color: var(--white);
+  background: rgb(10 10 10 / 0.92);
+  backdrop-filter: blur(16px) saturate(150%);
+  -webkit-backdrop-filter: blur(16px) saturate(150%);
+  border-top: 1px solid rgb(255 255 255 / 0.08);
+}
+
+.tabbar__list {
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  height: var(--tabbar-h);
+  margin: 0;
+  padding: 0 4px;
+}
+
+/* Active tab: one rounded box around both the icon and the label. */
+.tabbar__pill {
+  position: absolute;
+  top: 6px;
+  left: 4px;
+  width: calc((100% - 8px) / 5);
+  height: 52px;
+  pointer-events: none;
+}
+
+.tabbar__pill::before {
+  content: "";
+  display: block;
+  width: min(100% - 6px, 68px);
+  height: 100%;
+  margin-inline: auto;
+  background: var(--red-ui);
+  border-radius: 16px;
+  box-shadow: 0 4px 14px rgb(212 23 30 / 0.4);
+}
+
+.tabbar__item {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 5px;
+  width: 100%;
+  height: 100%;
+  min-height: 44px;
+  padding: 13px 0 0;
+  font-size: 10px;
+  font-weight: var(--fw-medium);
+  letter-spacing: 0.02em;
+  color: rgb(255 255 255 / 0.66);
+  text-decoration: none;
+  background: none;
+  border: 0;
+  cursor: pointer;
+}
+
+.tabbar__item.is-active {
+  color: var(--white);
+}
+
+.tabbar__icon svg {
+  width: 20px;
+  height: 20px;
+}
+
+.tabbar__label {
+  line-height: 1;
+}
+
+.tabbar__badge {
+  position: absolute;
+  top: 6px;
+  left: calc(50% + 6px);
+  min-width: 18px;
+  height: 18px;
+  padding: 0 5px;
+  font-size: 10px;
+  font-weight: var(--fw-semibold);
+  line-height: 14px;
+  font-variant-numeric: tabular-nums;
+  text-align: center;
+  color: var(--white);
+  background: var(--red-ui);
+  border: 2px solid var(--black);
+  border-radius: 999px;
+}
+
+.tabbar__badge[hidden] {
+  display: none;
+}
+
+.tabbar__item:focus-visible {
+  outline-offset: -4px;
+}
+
+/* The floating WhatsApp button moves into the tab bar on phones. */
+.m-app .wa-float {
+  display: none;
+}
+
+/* 3. Bottom sheets ---------------------------------------------------------- */
+.sheet-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 155;
+  background: rgb(10 10 10 / 0.55);
+  backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(2px);
+}
+
+.sheet-backdrop[hidden],
+.sheet[hidden] {
+  display: none;
+}
+
+.sheet {
+  position: fixed;
+  inset: auto 0 0;
+  z-index: 160;
+  display: flex;
+  flex-direction: column;
+  max-height: calc(100svh - var(--safe-t) - 40px);
+  color: var(--ink);
+  background: var(--white);
+  border-radius: 20px 20px 0 0;
+  box-shadow: var(--m-shadow-up);
+  touch-action: pan-y;
+}
+
+.sheet:focus {
+  outline: none;
+}
+
+.sheet__grab {
+  display: grid;
+  place-items: center;
+  height: 22px;
+  flex-shrink: 0;
+  touch-action: none;
+  cursor: grab;
+}
+
+.sheet__handle {
+  display: block;
+  width: 40px;
+  height: 5px;
+  background: #d5d8de;
+  border-radius: 999px;
+}
+
+.sheet__content {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  flex: 1;
+}
+
+.sheet__head {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 0 16px 12px;
+  border-bottom: 1px solid var(--m-line);
+  touch-action: none;
+}
+
+.sheet__heading {
+  flex: 1;
+  min-width: 0;
+}
+
+.sheet__title {
+  margin: 0;
+  font-size: 18px;
+}
+
+.sheet__sub {
+  margin: 2px 0 0;
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.sheet__close {
+  display: grid;
+  flex-shrink: 0;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  margin: -6px -8px 0 0;
+  padding: 0;
+  color: var(--ink);
+  background: var(--bg-soft);
+  border: 0;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.sheet__close svg {
+  width: 18px;
+  height: 18px;
+}
+
+.sheet__body {
+  flex: 1;
+  min-height: 0;
+  padding: 14px 16px calc(16px + var(--safe-b));
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+.sheet__foot {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  padding: 12px 16px calc(12px + var(--safe-b));
+  background: var(--white);
+  border-top: 1px solid var(--m-line);
+}
+
+.sheet__foot .btn {
+  padding-inline: 10px;
+}
+
+.sheet__wide {
+  width: 100%;
+  margin-top: 8px;
+}
+
+/* Products sheet */
+.sheet-all {
+  display: grid;
+  grid-template-columns: 44px 1fr 20px;
+  gap: 12px;
+  align-items: center;
+  margin-bottom: 18px;
+  padding: 12px;
+  color: var(--white);
+  text-decoration: none;
+  background: var(--black);
+  border-radius: var(--m-radius);
+}
+
+.sheet-all__icon {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  background: var(--red-ui);
+  border-radius: 12px;
+}
+
+.sheet-all svg {
+  width: 20px;
+  height: 20px;
+}
+
+.sheet-all strong {
+  display: block;
+  font-weight: var(--fw-semibold);
+}
+
+.sheet-all small {
+  color: var(--muted-on-dark);
+}
+
+.sheet-group + .sheet-group {
+  margin-top: 18px;
+}
+
+.sheet-group__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 10px;
+}
+
+.sheet-group__head h3 {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0;
+  font-size: 14px;
+}
+
+.sheet-group__head a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  font-size: 13px;
+  font-weight: var(--fw-semibold);
+  color: var(--red-ui);
+  text-decoration: none;
+}
+
+.sheet-group__dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--red);
+}
+
+.sheet-group__dot--cpvc {
+  background: var(--cpvc-cream);
+}
+
+.sheet-group__dot--agri {
+  background: var(--water-blue);
+}
+
+.sheet-tiles {
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.sheet-tile {
+  display: grid;
+  grid-template-columns: 52px minmax(0, 1fr);
+  gap: 10px;
+  align-items: center;
+  min-height: 68px;
+  padding: 8px;
+  color: var(--ink);
+  text-decoration: none;
+  background: var(--white);
+  border: 1px solid var(--m-line);
+  border-radius: 14px;
+}
+
+.sheet-tile__img {
+  display: block;
+  width: 52px;
+  height: 52px;
+  overflow: hidden;
+  background: linear-gradient(180deg, #f7f8fa, #e3e6eb);
+  border-radius: 10px;
+}
+
+.sheet-tile__img img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.sheet-tile strong {
+  display: -webkit-box;
+  overflow: hidden;
+  font-size: 13px;
+  font-weight: var(--fw-semibold);
+  line-height: 1.25;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+
+.sheet-tile small {
+  display: block;
+  margin-top: 2px;
+  font-size: 12px;
+  color: var(--muted);
+}
+
+/* Quick add sheet */
+.sheet__head--product {
+  align-items: center;
+}
+
+.quick__img {
+  display: block;
+  flex-shrink: 0;
+  width: 56px;
+  height: 56px;
+  overflow: hidden;
+  background: linear-gradient(180deg, #f7f8fa, #e3e6eb);
+  border-radius: 12px;
+}
+
+.quick__img img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.quick__hint {
+  margin: 0 0 12px;
+  font-size: 12px;
+  color: var(--muted);
+}
+
+/* In the quick-add sheet every size is already open. */
+.sheet--quick .spec-row__toggle {
+  display: none;
+}
+
+/* Quote list: a full-height bottom sheet with a sticky send button. */
+.quote-drawer {
+  inset: auto 0 0;
+  width: 100%;
+  height: calc(100svh - var(--safe-t) - 12px);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  border-radius: 20px 20px 0 0;
+  box-shadow: var(--m-shadow-up);
+}
+
+.quote-drawer__head {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  padding: 22px 16px 12px;
+  border-radius: 20px 20px 0 0;
+  touch-action: none;
+}
+
+.quote-drawer__head h2 {
+  font-size: 17px;
+}
+
+.quote-drawer__close {
+  width: 44px;
+  height: 44px;
+}
+
+.sheet__handle--light {
+  position: absolute;
+  top: 8px;
+  left: 50%;
+  translate: -50% 0;
+  background: rgb(255 255 255 / 0.35);
+}
+
+.quote-drawer__body {
+  flex: 1 0 auto;
+  padding: 12px 16px;
+  overflow: visible;
+}
+
+.quote-item {
+  grid-template-columns: 44px 1fr auto;
+  gap: 10px;
+  padding: 10px;
+  background: var(--white);
+  border: 1px solid var(--m-line);
+  border-radius: 14px;
+}
+
+.quote-item img {
+  width: 44px;
+  height: 44px;
+  border-radius: 10px;
+}
+
+.quote-item .qty {
+  grid-column: 2;
+  justify-self: start;
+}
+
+.quote-item__remove {
+  grid-row: 1;
+  grid-column: 3;
+  width: 44px;
+  height: 44px;
+}
+
+.quote-form {
+  gap: 10px;
+  padding: 14px 16px 0;
+}
+
+.quote-form .field label {
+  font-size: 12px;
+}
+
+.quote-form__actions {
+  position: sticky;
+  bottom: 0;
+  z-index: 2;
+  margin-inline: -16px;
+  padding: 12px 16px calc(12px + var(--safe-b));
+  background: var(--white);
+  border-top: 1px solid var(--m-line);
+  box-shadow: 0 -8px 24px rgb(10 10 10 / 0.06);
+}
+
+.quote-form__note {
+  order: -1;
+  font-size: 12px;
+}
+
+.quote-overlay {
+  z-index: 140;
+}
+
+/* 4. Search overlay --------------------------------------------------------- */
+.m-search {
+  position: fixed;
+  inset: 0;
+  z-index: 170;
+  display: flex;
+  flex-direction: column;
+  background: var(--m-bg);
+}
+
+.m-search[hidden] {
+  display: none;
+}
+
+.m-search__bar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: calc(8px + var(--safe-t)) 12px 8px 16px;
+  background: var(--black);
+}
+
+.m-search__field {
+  position: relative;
+  flex: 1;
+}
+
+.m-search__field svg {
+  position: absolute;
+  top: 50%;
+  left: 12px;
+  width: 18px;
+  height: 18px;
+  color: var(--muted-on-dark);
+  translate: 0 -50%;
+}
+
+.m-search__field input {
+  width: 100%;
+  height: 44px;
+  padding: 0 12px 0 40px;
+  font-size: 16px; /* 16px stops iOS zooming into the field */
+  color: var(--white);
+  background: rgb(255 255 255 / 0.1);
+  border: 1px solid rgb(255 255 255 / 0.14);
+  border-radius: 12px;
+}
+
+.m-search__field input:focus-visible {
+  outline: 2px solid rgb(255 255 255 / 0.5);
+  outline-offset: 0;
+}
+
+.m-search__field input::placeholder {
+  color: rgb(255 255 255 / 0.5);
+}
+
+.m-search__cancel {
+  min-height: 44px;
+  padding: 0 6px;
+  font-weight: var(--fw-medium);
+  color: var(--white);
+  background: none;
+  border: 0;
+  cursor: pointer;
+}
+
+.m-search__body {
+  flex: 1;
+  padding: 16px 16px calc(24px + var(--safe-b));
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+.m-search__group[hidden] {
+  display: none;
+}
+
+.m-search__group + .m-search__group {
+  margin-top: 20px;
+}
+
+.m-search__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.m-search__head h2 {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: 12px;
+  font-weight: var(--fw-semibold);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.m-search__head h2 svg {
+  width: 15px;
+  height: 15px;
+}
+
+.m-search__head button {
+  min-height: 44px;
+  font-size: 13px;
+  font-weight: var(--fw-semibold);
+  color: var(--red-ui);
+  background: none;
+  border: 0;
+}
+
+.m-search__chips {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.m-search__chip {
+  min-height: 40px;
+  padding: 0 14px;
+  font-size: 13px;
+  font-weight: var(--fw-medium);
+  color: var(--ink);
+  background: var(--white);
+  border: 1px solid var(--m-line);
+  border-radius: 999px;
+  cursor: pointer;
+}
+
+.m-search__results {
+  list-style: none;
+  display: grid;
+  gap: 8px;
+}
+
+.m-result {
+  display: grid;
+  grid-template-columns: 48px minmax(0, 1fr) 18px;
+  gap: 12px;
+  align-items: center;
+  padding: 8px 12px 8px 8px;
+  color: var(--ink);
+  text-decoration: none;
+  background: var(--white);
+  border: 1px solid var(--m-line);
+  border-radius: 14px;
+}
+
+.m-result__img {
+  display: block;
+  width: 48px;
+  height: 48px;
+  overflow: hidden;
+  background: linear-gradient(180deg, #f7f8fa, #e3e6eb);
+  border-radius: 10px;
+}
+
+.m-result__img img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.m-result strong {
+  display: block;
+  overflow: hidden;
+  font-size: 13px;
+  font-weight: var(--fw-semibold);
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.m-result small {
+  color: var(--muted);
+}
+
+.m-result > svg {
+  width: 18px;
+  height: 18px;
+  color: var(--muted);
+}
+
+.m-search__all {
+  width: 100%;
+  margin-top: 14px;
+}
+
+.m-search__all[hidden] {
+  display: none;
+}
+
+/* 5. Home ------------------------------------------------------------------- */
+.hero--home {
+  min-height: 0;
+  max-height: 85svh;
+}
+
+/* Smaller swoosh on phones; content padding stays derived from it (as on desktop),
+   so the buttons always clear the curve. */
+.hero--home {
+  --swoosh-h: 48px;
+}
+
+.hero--home .hero__inner {
+  padding-top: 20px;
+  padding-bottom: calc(var(--swoosh-h) + 20px);
+}
+
+.hero--home .eyebrow {
+  margin-bottom: 8px;
+}
+
+.hero--home .hero__title {
+  max-width: none;
+  margin-bottom: 8px;
+  letter-spacing: -0.02em;
+}
+
+.hero--home .hero__lead {
+  display: -webkit-box;
+  margin-bottom: 0;
+  overflow: hidden;
+  font-size: 13px;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+
+.hero--home .hero-group {
+  width: min(100%, 300px);
+  max-height: 30svh;
+  margin-block: 4px 12px;
+  aspect-ratio: 1.12 / 1;
+}
+
+.hero--home .btn-row {
+  display: grid;
+  grid-template-columns: 1.25fr 1fr;
+  gap: 8px;
+}
+
+.hero--home .btn-row .btn {
+  gap: 6px;
+  padding-inline: 6px;
+  font-size: 12.5px;
+  white-space: nowrap;
+}
+
+.hero--home .btn-row .btn svg {
+  width: 16px;
+  height: 16px;
+}
+
+.hero--home .btn-row .btn--ghost svg {
+  display: none;
+}
+
+.hero--home .trust,
+.hero--home .quick-links {
+  display: none;
+}
+
+/* Category chips: one horizontal swipe row. */
+.m-home {
+  padding-top: 16px;
+  background: var(--m-bg);
+}
+
+.m-chips__list {
+  list-style: none;
+  display: flex;
+  gap: 8px;
+  margin: 0;
+  padding: 0 var(--gutter) 4px;
+  overflow-x: auto;
+  scroll-snap-type: x proximity;
+  scroll-padding-inline: var(--gutter);
+  scrollbar-width: none;
+}
+
+.m-chips__list::-webkit-scrollbar,
+.m-rail__track::-webkit-scrollbar {
+  display: none;
+}
+
+.m-chips__list li {
+  flex-shrink: 0;
+  scroll-snap-align: start;
+}
+
+.m-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 44px;
+  padding: 0 16px 0 8px;
+  font-size: 13px;
+  font-weight: var(--fw-medium);
+  white-space: nowrap;
+  color: var(--ink);
+  text-decoration: none;
+  background: var(--white);
+  border: 1px solid var(--m-line);
+  border-radius: 999px;
+  box-shadow: 0 1px 2px rgb(10 10 10 / 0.04);
+}
+
+.m-chip:not(:has(img, svg)) {
+  padding-left: 16px;
+}
+
+.m-chip img,
+.m-chip svg {
+  width: 28px;
+  height: 28px;
+  padding: 2px;
+  object-fit: contain;
+  background: linear-gradient(180deg, #f7f8fa, #e3e6eb);
+  border-radius: 50%;
+}
+
+.m-chip svg {
+  padding: 6px;
+  color: var(--white);
+  background: var(--black);
+}
+
+/* Product rails: 2.2 cards visible so the next one peeks. */
+.m-rail {
+  padding-top: 24px;
+}
+
+.m-rail:last-child {
+  padding-bottom: 32px;
+}
+
+.m-rail__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 10px;
+  padding-inline: var(--gutter);
+}
+
+.m-rail__title {
+  margin: 0;
+  font-size: 17px;
+}
+
+.m-rail__more {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  font-size: 13px;
+  font-weight: var(--fw-semibold);
+  color: var(--red-ui);
+  text-decoration: none;
+}
+
+.m-rail__track {
+  --peek: 2.2;
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: calc((100% - 2 * var(--gutter) - (var(--peek) - 1) * var(--m-gap)) / var(--peek));
+  gap: var(--m-gap);
+  padding: 2px var(--gutter) 12px;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scroll-snap-type: x mandatory;
+  scroll-padding-inline: var(--gutter);
+  scrollbar-width: none;
+}
+
+.m-rail__track > * {
+  scroll-snap-align: start;
+}
+
+/* Remaining home sections, compact. */
+.compare-home .compare {
+  min-width: 0;
+  font-size: 12px;
+}
+
+.compare-home .compare th,
+.compare-home .compare td {
+  padding: 10px 8px;
+}
+
+.compare-home .compare tbody th {
+  width: 30%;
+}
+
+.facts {
+  gap: 10px;
+}
+
+.fact {
+  padding: 14px;
+  border-radius: 14px;
+}
+
+.fact__value {
+  font-size: 22px;
+  font-variant-numeric: tabular-nums;
+}
+
+.fact__label {
+  font-size: 12px;
+}
+
+.points {
+  gap: 10px;
+}
+
+.point {
+  gap: 12px;
+  padding: 14px;
+  border-radius: 14px;
+}
+
+.point h3 {
+  margin-bottom: 2px;
+  font-size: 14px;
+}
+
+.point p {
+  margin: 0;
+  font-size: 13px;
+}
+
+.point__icon {
+  width: 40px;
+  height: 40px;
+}
+
+.point__icon svg {
+  width: 20px;
+  height: 20px;
+}
+
+.step h3 {
+  font-size: 14px;
+}
+
+.step p {
+  font-size: 13px;
+}
+
+.splash {
+  padding-block: var(--m-section);
+}
+
+/* 6. Product cards ----------------------------------------------------------
+   App-store style card: image on a light gradient with a round "+" (quick add)
+   floating on its bottom-right corner, then tag, 2-line name and one full-width
+   "Get Quote" button. Nothing sits side by side, so it never cramps at 360px. */
+.product-card {
+  --card-media: 136px;
+  position: relative;
+  background: var(--white);
+  border: 1px solid var(--m-line);
+  border-radius: var(--m-radius);
+  box-shadow: var(--m-shadow);
+}
+
+.product-card__media {
+  aspect-ratio: auto;
+  height: var(--card-media);
+  background: linear-gradient(180deg, #f9fafb 0%, #e6e9ee 100%);
+}
+
+.product-card__media img {
+  padding: 10px 10px 14px;
+}
+
+.product-card__body {
+  gap: 6px;
+  padding: 10px 10px 10px;
+}
+
+.product-card__tag {
+  align-self: flex-start;
+  max-width: 100%;
+  overflow: hidden;
+  padding: 3px 8px;
+  font-size: 10.5px;
+  font-weight: var(--fw-semibold);
+  letter-spacing: 0.01em;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  border-radius: 999px;
+}
+
+.product-card .product-card__title {
+  display: -webkit-box;
+  min-height: 2.5em;
+  margin: 0;
+  overflow: hidden;
+  font-size: 13px;
+  line-height: 1.25;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+
+.product-card__title a {
+  display: inline; /* inline-block would defeat the 2-line clamp */
+  text-decoration: none;
+}
+
+/* Whole card opens the product (stretched title link); the buttons sit above it. */
+.product-card__title a::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+}
+
+.product-card__aka,
+.product-card__sizes {
+  display: none;
+}
+
+/* Static wrapper: the "+" positions itself against the card, not the button row. */
+.product-card .product-card__actions {
+  position: static;
+  display: block;
+  margin-top: auto;
+  padding-top: 4px;
+}
+
+.product-card__actions .btn {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  min-height: 44px;
+  gap: 6px;
+  padding: 8px 10px;
+  font-size: 13px;
+  white-space: nowrap;
+  border-radius: 12px;
+}
+
+.product-card__actions .btn svg {
+  flex-shrink: 0;
+  width: 16px;
+  height: 16px;
+}
+
+/* "Details" duplicates the image tap on phones. */
+.product-card__actions .btn--dark {
+  display: none;
+}
+
+/* Quick add: round button floating on the image corner. */
+.product-card__add {
+  position: absolute;
+  z-index: 3;
+  top: calc(var(--card-media) - 52px);
+  right: 8px;
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  color: var(--ink);
+  background: var(--white);
+  border: 1px solid var(--m-line);
+  border-radius: 50%;
+  box-shadow: 0 2px 4px rgb(10 10 10 / 0.06), 0 6px 16px rgb(10 10 10 / 0.12);
+  cursor: pointer;
+}
+
+.product-card__add svg {
+  width: 20px;
+  height: 20px;
+}
+
+.product-card__add:focus-visible {
+  outline-offset: 2px;
+}
+
+.grid {
+  gap: var(--m-gap);
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+/* 7. Page heroes (inner pages) ---------------------------------------------- */
+.page-hero .hero__swoosh {
+  height: 48px;
+}
+
+.page-hero__inner,
+.page-hero .line-hero {
+  padding-top: 16px; /* the inner already starts below the app bar (margin-top in components.css) */
+  padding-bottom: 68px; /* 48px swoosh + 20px air */
+}
+
+.page-hero p {
+  font-size: 14px;
+}
+
+.breadcrumb {
+  margin-bottom: 10px;
+  font-size: 12px;
+}
+
+.line-hero {
+  gap: 12px;
+}
+
+.line-hero h1 {
+  font-size: 27px;
+}
+
+.line-hero__visual {
+  max-width: 240px;
+  margin-inline: auto;
+}
+
+.line-hero__lead {
+  display: -webkit-box;
+  overflow: hidden;
+  font-size: 13px;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+}
+
+.spec-chips {
+  flex-wrap: nowrap;
+  gap: 6px;
+  margin-inline: calc(-1 * var(--gutter));
+  padding-inline: var(--gutter);
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.spec-chips::-webkit-scrollbar {
+  display: none;
+}
+
+.spec-chips li {
+  flex-shrink: 0;
+  font-size: 12px;
+}
+
+.hero-stats {
+  gap: 8px;
+}
+
+.hero-stats li {
+  padding: 10px 12px;
+}
+
+.hero-stats strong {
+  font-size: 18px;
+}
+
+/* "Jump to a category" tiles: one swipe row instead of a tall grid. */
+.cat-tiles {
+  display: flex;
+  gap: 8px;
+  margin-inline: calc(-1 * var(--gutter));
+  padding: 0 var(--gutter) 4px;
+  overflow-x: auto;
+  scroll-snap-type: x proximity;
+  scrollbar-width: none;
+}
+
+.cat-tiles::-webkit-scrollbar {
+  display: none;
+}
+
+.cat-tile {
+  flex: 0 0 auto;
+  grid-template-columns: 40px auto;
+  gap: 10px;
+  width: max-content;
+  min-height: 52px;
+  padding: 6px 14px 6px 6px;
+  border-radius: 14px;
+  scroll-snap-align: start;
+}
+
+.cat-tile__media {
+  width: 40px;
+  height: 40px;
+}
+
+.cat-tile__text {
+  white-space: nowrap;
+  font-size: 13px;
+  line-height: 1.25;
+}
+
+/* Product line tiles (products page hero): compact rows. */
+.line-tiles {
+  gap: 8px;
+}
+
+.line-tile {
+  grid-template-columns: 52px 1fr auto;
+  gap: 12px;
+  padding: 6px 14px 6px 6px;
+  border-radius: 14px;
+}
+
+.line-tile__media {
+  width: 52px;
+  height: 52px;
+  border-radius: 10px;
+}
+
+/* 8. Catalogue -------------------------------------------------------------- */
+.section--catalogue {
+  padding-top: 0;
+  background: var(--m-bg);
+}
+
+/* Sticky filter chips right under the app bar; slides up with it. */
+.cat-sidebar {
+  top: var(--header-h);
+  gap: 8px;
+  padding-block: 8px;
+  background: rgb(243 244 246 / 0.94);
+  border-bottom-color: var(--m-line);
+  transition: top 0.3s var(--ease);
+}
+
+.m-app.is-appbar-hidden .cat-sidebar {
+  top: var(--safe-t);
+}
+
+/* The search overlay replaces the inline field; it reappears while a query is active. */
+.m-app .cat-sidebar .search:has(input:placeholder-shown) {
+  display: none;
+}
+
+.filter-group__options {
+  padding-block: 4px;
+}
+
+.filter-option,
+.catalogue-layout--blocks .filter-group--types .filter-option {
+  position: relative;
+  min-height: 36px;
+  padding: 4px 10px 4px 12px;
+  font-size: 13px;
+  border-color: var(--m-line);
+}
+
+/* 36px chips with a 44px tap area. */
+.filter-option::before {
+  content: "";
+  position: absolute;
+  inset: -5px 0;
+}
+
+.terms-band a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+}
+
+.filter-option__count {
+  min-width: 22px;
+  padding: 0 6px;
+  font-size: 11px;
+}
+
+.catalogue__count {
+  margin: 12px 0 10px;
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.cat-blocks {
+  gap: 28px;
+}
+
+.cat-block__head {
+  grid-template-columns: 56px 1fr;
+  gap: 12px;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.cat-block__img {
+  width: 56px;
+  height: 56px;
+  border-radius: 12px;
+}
+
+.cat-block__title {
+  margin-bottom: 2px;
+  font-size: 17px;
+}
+
+.cat-block__desc {
+  display: -webkit-box;
+  margin-bottom: 2px;
+  overflow: hidden;
+  font-size: 12px;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+
+.cat-block__count {
+  font-size: 12px;
+}
+
+.cat-block__items {
+  gap: var(--m-gap);
+}
+
+.product-panel {
+  padding: 12px;
+  background: var(--white);
+  border: 1px solid var(--m-line);
+  border-radius: var(--m-radius);
+  box-shadow: var(--m-shadow);
+  contain-intrinsic-size: auto 300px;
+}
+
+.product-panel__info {
+  grid-template-columns: 72px minmax(0, 1fr);
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.product-panel__media {
+  width: 72px;
+  height: 72px;
+  border-radius: 12px;
+}
+
+.product-panel__title {
+  margin-bottom: 2px;
+  font-size: 15px;
+}
+
+.product-panel .product-card__sizes {
+  display: block;
+  margin: 0;
+  font-size: 12px;
+}
+
+.product-panel__actions {
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.product-panel__actions .btn {
+  min-height: 44px;
+  padding: 6px 12px;
+  font-size: 12px;
+}
+
+.agri-facts,
+.swatches {
+  font-size: 12px;
+}
+
+/* Detail dialog: full-width bottom sheet look. */
+.detail-dialog {
+  width: 100%;
+  max-width: none;
+  max-height: calc(100svh - var(--safe-t) - 24px);
+  margin: auto 0 0;
+  border-radius: 20px 20px 0 0;
+}
+
+.detail {
+  gap: 14px;
+  padding: 16px 16px calc(24px + var(--safe-b));
+}
+
+.detail__media {
+  max-height: 200px;
+  border-radius: var(--m-radius);
+}
+
+.detail__media img {
+  max-height: 200px;
+  object-fit: contain;
+}
+
+.detail__title {
+  font-size: 20px;
+}
+
+/* 9. Spec tables -> tap-to-expand size cards (no horizontal scrolling) ----- */
+.table-wrap--quote {
+  overflow: visible;
+  background: none;
+  border: 0;
+}
+
+.spec-table--quote,
+.spec-table--quote tbody {
+  display: block;
+  width: 100%;
+}
+
+.spec-table--quote thead {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+}
+
+.spec-table--quote caption {
+  display: block;
+  border-radius: 12px 12px 0 0;
+}
+
+.spec-table--quote tbody tr {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 0 12px;
+  width: 100%;
+  margin-bottom: 8px;
+  padding: 0 14px;
+  background: var(--white);
+  border: 1px solid var(--m-line);
+  border-radius: 14px;
+  box-shadow: 0 1px 2px rgb(10 10 10 / 0.04);
+}
+
+.spec-table--quote th,
+.spec-table--quote td {
+  display: none;
+  width: auto; /* desktop sizes the qty/add columns with width: 1% */
+  padding: 0;
+  white-space: normal;
+  border: 0;
+}
+
+/* Collapsed: size on the left, first spec (e.g. packing) on the right, chevron. */
+.spec-table--quote .spec-table__size {
+  display: flex;
+  align-items: center;
+  min-height: 52px;
+  font-family: var(--font-display);
+  font-size: 15px;
+  font-weight: var(--fw-display);
+  font-variant-numeric: tabular-nums;
+}
+
+.spec-table--quote .spec-table__size + td {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: center;
+  min-height: 52px;
+  padding-right: 26px;
+  font-size: 13px;
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+}
+
+.spec-table--quote td[data-label]::before {
+  content: attr(data-label);
+  font-size: 10px;
+  font-weight: var(--fw-semibold);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.spec-row__toggle {
+  position: absolute;
+  inset: 0 0 auto;
+  z-index: 1;
+  height: 52px;
+  padding: 0;
+  background: none;
+  border: 0;
+  border-radius: 14px;
+  cursor: pointer;
+}
+
+.spec-row__toggle::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  right: 16px;
+  width: 8px;
+  height: 8px;
+  border-right: 2px solid var(--muted);
+  border-bottom: 2px solid var(--muted);
+  transform: translateY(-70%) rotate(45deg);
+  transition: transform 0.25s var(--ease);
+}
+
+.spec-row__toggle[aria-expanded="true"]::after {
+  transform: translateY(-30%) rotate(225deg);
+}
+
+.spec-row__toggle:focus-visible {
+  outline-offset: -3px;
+}
+
+/* Expanded (tap, search match, or inside the quick-add sheet). */
+:is(.spec-table--quote tr.is-open, .spec-table--quote tr.is-match, .sheet--quick .spec-table--quote tr) {
+  padding-bottom: 12px;
+  border-color: #d5d9df;
+}
+
+:is(.spec-table--quote tr.is-open, .spec-table--quote tr.is-match, .sheet--quick .spec-table--quote tr)::before {
+  content: "";
+  position: absolute;
+  top: 52px;
+  left: 14px;
+  right: 14px;
+  height: 1px;
+  background: var(--m-line);
+}
+
+:is(.spec-table--quote tr.is-open, .spec-table--quote tr.is-match, .sheet--quick .spec-table--quote tr) > td {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding-top: 10px;
+  font-size: 13px;
+  font-variant-numeric: tabular-nums;
+}
+
+:is(.spec-table--quote tr.is-open, .spec-table--quote tr.is-match, .sheet--quick .spec-table--quote tr) > .spec-table__size + td {
+  padding-top: 0;
+}
+
+:is(.spec-table--quote tr.is-open, .spec-table--quote tr.is-match, .sheet--quick .spec-table--quote tr) > .spec-table__qty,
+:is(.spec-table--quote tr.is-open, .spec-table--quote tr.is-match, .sheet--quick .spec-table--quote tr) > .spec-table__add {
+  justify-content: center;
+  padding-top: 12px;
+}
+
+.sheet--quick .spec-table--quote .spec-table__size + td {
+  padding-right: 0;
+}
+
+.spec-table--quote tr.is-match {
+  border-color: var(--red-ui);
+}
+
+.spec-table--quote .spec-table__qty::before {
+  display: none;
+}
+
+.spec-table--quote .qty {
+  width: 100%;
+  justify-content: space-between;
+}
+
+.qty__btn {
+  width: 44px;
+  height: 44px;
+}
+
+.spec-table--quote .spec-table__add .btn {
+  width: 100%;
+  padding-inline: 8px;
+  font-size: 13px;
+}
+
+/* 10. Footer: compact, accordions, contact buttons --------------------------- */
+.site-footer {
+  font-size: 13px;
+}
+
+.footer__grid {
+  gap: 0;
+  padding-block: 32px 8px;
+}
+
+.footer__brand {
+  padding-bottom: 16px;
+}
+
+.footer__brand img {
+  height: 52px;
+  width: auto;
+}
+
+.footer__brand p {
+  font-size: 13px;
+}
+
+.m-acc {
+  border-top: 1px solid rgb(255 255 255 / 0.1);
+}
+
+.m-acc h2 {
+  margin: 0;
+}
+
+.m-acc__btn {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  min-height: 52px;
+  padding: 0;
+  font-family: var(--font-display);
+  font-size: 14px;
+  font-weight: var(--fw-display);
+  color: var(--white);
+  text-align: left;
+  background: none;
+  border: 0;
+  cursor: pointer;
+}
+
+.m-chevron {
+  width: 18px;
+  height: 18px;
+  color: var(--muted-on-dark);
+  transition: transform 0.25s var(--ease);
+}
+
+.m-acc__btn[aria-expanded="true"] .m-chevron {
+  transform: rotate(180deg);
+}
+
+.m-acc__panel {
+  overflow: hidden;
+  padding-bottom: 14px;
+}
+
+.m-acc__panel[hidden] {
+  display: none;
+}
+
+.m-acc__panel ul {
+  gap: 0;
+}
+
+.m-acc__panel a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 40px;
+}
+
+.m-contact {
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  margin: 16px 0 0;
+  padding: 0;
+}
+
+.m-contact__btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  min-height: 64px;
+  font-size: 12px;
+  font-weight: var(--fw-medium);
+  color: var(--white);
+  text-decoration: none;
+  background: rgb(255 255 255 / 0.06);
+  border: 1px solid rgb(255 255 255 / 0.12);
+  border-radius: 14px;
+}
+
+.m-contact__btn svg {
+  width: 20px;
+  height: 20px;
+  color: var(--red);
+}
+
+.footer__terms {
+  font-size: 11px;
+}
+
+.footer__bottom {
+  gap: 4px;
+  padding-block: 14px;
+  font-size: 11px;
+}
+
+/* 11. Skeleton shimmer while images load -------------------------------------
+   A light band sweeps across the empty image frame (transform only, so it runs on the
+   compositor, not the main thread). js/mobile.js adds .is-loaded to the image and its
+   frame on load: the band stops and the image fades in over it. */
+@keyframes m-shimmer {
+  from {
+    transform: translateX(-100%);
+  }
+
+  to {
+    transform: translateX(100%);
+  }
+}
+
+@keyframes m-img-fallback {
+  to {
+    opacity: 1;
+  }
+}
+
+.m-app :is(.product-card__media, .product-panel__media, .sheet-tile__img, .m-result__img, .quick__img) {
+  position: relative;
+  overflow: hidden;
+}
+
+.m-app :is(.product-card__media, .product-panel__media, .sheet-tile__img, .m-result__img, .quick__img)::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(100deg, transparent 20%, rgb(255 255 255 / 0.65) 50%, transparent 80%);
+  animation: m-shimmer 1.3s linear infinite;
+  pointer-events: none;
+}
+
+.m-app :is(.product-card__media, .product-panel__media, .sheet-tile__img, .m-result__img, .quick__img).is-loaded::before {
+  display: none;
+}
+
+.m-app :is(.product-card__media, .product-panel__media, .sheet-tile__img, .m-result__img, .quick__img) img {
+  position: relative;
+  transition: opacity 0.35s ease;
+}
+
+.m-app.m-fade-ready :is(.product-card__media, .product-panel__media, .sheet-tile__img, .m-result__img, .quick__img) img:not(.is-loaded) {
+  opacity: 0;
+  /* Safety net: never leave an image invisible if its load event was missed. */
+  animation: m-img-fallback 0s 4s forwards;
+}
+
+/* 12. Older phone-only rules merged from components.css ---------------------- */
+@media (max-width: 639px) {
+  .qc-card {
+    grid-template-columns: 48px minmax(0, 1fr) auto;
+    gap: 12px;
+    padding: 14px 16px;
+  }
+
+  .qc-card__icon {
+    width: 48px;
+    height: 48px;
+  }
+
+  .qc-card__text strong {
+    font-size: 0.95rem;
+    white-space: normal;
+    overflow-wrap: anywhere;
+  }
+
+  /* Compact 2-column page list so the book stays near the top of the section. */
+  .page-list {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .page-list button {
+    gap: 8px;
+    padding: 8px;
+    font-size: 0.82rem;
+  }
+
+  .page-list__num {
+    width: 26px;
+    height: 26px;
+    font-size: 0.72rem;
+  }
+
+  /* Keep the fanned pages inside the screen. */
+  .cat-fan {
+    width: 86%;
+  }
+
+  .cat-fan__page--2 {
+    transform: translateX(-78%) rotate(-10deg);
+  }
+
+  .cat-fan__page--3 {
+    transform: translateX(-22%) rotate(9deg);
+  }
+}
+
+/* 13. Reduced motion ------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  :is(.btn, .tabbar__item, .product-card, .m-chip, .filter-option, .sheet-tile, .sheet-all,
+    .quote-btn, .m-icon-btn, .product-card__add, .m-result, .m-contact__btn, .m-search__chip,
+    .qty__btn, .cat-tile, .quick-link):active {
+    transform: none;
+  }
+
+  .m-app :is(.product-card__media, .product-panel__media, .sheet-tile__img, .m-result__img, .quick__img)::before {
+    animation: none;
+  }
+
+  .cat-sidebar,
+  .spec-row__toggle::after,
+  .m-chevron {
+    transition: none;
+  }
+}

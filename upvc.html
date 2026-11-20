@@ -2,11 +2,15 @@
 <html lang="en-IN">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>UPVC Pipes &amp; Fittings | SCH-40, SCH-80 | CAPSON</title>
   <meta name="description" content="CAPSON UPVC pipes (SCH-40, SCH-80) and fittings: elbows, tees, FTA/MTA, unions, tank nipples, ball valves, brass fittings, clamps and solvent. Sizes 1/2" to 2".">
   <link rel="canonical" href="https://www.capsonpipeandfittings.com/upvc.html">
   <meta name="theme-color" content="#0A0A0A">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="CAPSON">
 
   <!-- Open Graph / social -->
   <meta property="og:type" content="website">
@@ -22,7 +26,7 @@
   <meta name="twitter:card" content="summary_large_image">
 
   <link rel="icon" type="image/png" sizes="32x32" href="assets/img/brand/favicon-32.png">
-  <link rel="apple-touch-icon" href="assets/img/brand/favicon-180.png">
+  <link rel="apple-touch-icon" href="assets/img/brand/app-icon-180.png">
   <link rel="manifest" href="site.webmanifest">
 
   <!-- Fonts: Unbounded (display) · Outfit (body/UI) · Merienda (tagline). One stylesheet,
@@ -35,6 +39,8 @@
   <link rel="stylesheet" href="css/tokens.css">
   <link rel="stylesheet" href="css/base.css">
   <link rel="stylesheet" href="css/components.css">
+  <!-- Phone app shell (<= 768px); the media attribute keeps it off desktop entirely -->
+  <link rel="stylesheet" href="css/mobile.css" media="(max-width: 768px)">
   <!-- js class + cover the page from first paint when arriving via a page transition -->
   <!-- js class; page-transition cover; preloader only on the first page of a visit -->
   <script>!function(d){d.classList.add('js');try{var r=matchMedia('(prefers-reduced-motion: reduce)').matches,s=sessionStorage;s.getItem('capson:wipe')&&!r&&d.classList.add('is-wiping');if(!r&&!s.getItem('capson:seen')&&!s.getItem('capson:wipe'))d.classList.add('is-preloading');s.setItem('capson:seen','1')}catch(e){}}(document.documentElement);</script>

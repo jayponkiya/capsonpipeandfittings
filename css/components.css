@@ -444,6 +444,19 @@
   color: var(--white);
 }
 
+/* Spacing comes from the grid gap only; default <p> margins would double it. */
+.drawer__footer p {
+  margin: 0;
+}
+
+/* Copyright + designer credit at the very bottom of the mobile menu */
+.drawer__legal {
+  padding-top: 12px;
+  border-top: 1px solid rgb(255 255 255 / 0.1);
+  font-size: 0.78rem;
+  line-height: 1.6;
+}
+
 html.is-locked,
 html.is-locked body {
   overflow: hidden;
@@ -2326,98 +2339,6 @@ html.is-locked body {
 }
 
 /* Mobile: every row becomes a stacked card */
-@media (max-width: 719px) {
-  .table-wrap--quote {
-    overflow: visible;
-    border: 0;
-  }
-
-  .spec-table--quote,
-  .spec-table--quote tbody,
-  .spec-table--quote tr {
-    display: block;
-    width: 100%;
-  }
-
-  .spec-table--quote thead {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    overflow: hidden;
-    clip: rect(0, 0, 0, 0);
-  }
-
-  .spec-table--quote caption {
-    display: block;
-    border-radius: var(--radius-sm) var(--radius-sm) 0 0;
-  }
-
-  .spec-table--quote tr {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 2px 12px;
-    margin-bottom: 10px;
-    padding: 12px;
-    background: var(--white);
-    border: 1px solid var(--line);
-    border-radius: var(--radius);
-  }
-
-  .spec-table--quote tbody tr:last-child > * {
-    border-bottom: 0;
-  }
-
-  .spec-table--quote th,
-  .spec-table--quote td {
-    display: flex;
-    flex-direction: column;
-    gap: 2px;
-    padding: 4px 0;
-    white-space: normal;
-    border: 0;
-  }
-
-  .spec-table--quote [data-label]::before {
-    content: attr(data-label);
-    font-size: 0.72rem;
-    font-weight: var(--fw-semibold);
-    letter-spacing: 0.04em;
-    text-transform: uppercase;
-    color: var(--muted);
-  }
-
-  .spec-table--quote .spec-table__size {
-    grid-column: 1 / -1;
-    flex-direction: row;
-    align-items: baseline;
-    gap: 8px;
-    padding-bottom: 8px;
-    font-family: var(--font-display);
-    font-size: 1.05rem;
-    font-weight: var(--fw-display);
-    border-bottom: 1px solid var(--line);
-  }
-
-  .spec-table--quote .spec-table__size::before {
-    font-family: var(--font-body);
-  }
-
-  .spec-table--quote .spec-table__qty,
-  .spec-table--quote .spec-table__add {
-    width: auto;
-    justify-content: flex-end;
-    padding-top: 10px;
-  }
-
-  .spec-table--quote .spec-table__qty::before {
-    display: none;
-  }
-
-  .spec-table--quote .spec-table__add .btn {
-    width: 100%;
-  }
-}
-
 /* --------------------------------------------------------------------------
    Agri: coil facts + colour swatches
    -------------------------------------------------------------------------- */
@@ -2718,6 +2639,14 @@ html.is-locked body {
   display: none;
 }
 
+/* Phone-only UI (app shell, quick-add, spec row toggles: see css/mobile.css + js/mobile.js)
+   never shows from 769px up. */
+@media (min-width: 769px) {
+  .m-only {
+    display: none !important;
+  }
+}
+
 .quote-drawer {
   position: fixed;
   inset: 0 0 0 auto;
@@ -2841,27 +2770,6 @@ html.is-locked body {
 .quote-item__remove svg {
   width: 16px;
   height: 16px;
-}
-
-@media (max-width: 400px) {
-  .quote-item {
-    grid-template-columns: 44px 1fr auto;
-  }
-
-  .quote-item img {
-    width: 44px;
-    height: 44px;
-  }
-
-  .quote-item .qty {
-    grid-column: 2;
-    justify-self: start;
-  }
-
-  .quote-item__remove {
-    grid-row: 1;
-    grid-column: 3;
-  }
 }
 
 .quote-empty {
@@ -4326,22 +4234,6 @@ html.is-wiping::before {
 
 
 /* Home comparison fits small screens without sideways scrolling. */
-@media (max-width: 639px) {
-  .compare-home .compare {
-    min-width: 0;
-    font-size: 0.85rem;
-  }
-
-  .compare-home .compare th,
-  .compare-home .compare td {
-    padding: 10px 8px;
-  }
-
-  .compare-home .compare tbody th {
-    width: 30%;
-  }
-}
-
 
 /* Tap targets: card title links get at least 24px of height (WCAG 2.5.8). */
 .product-card__title a {
@@ -5277,30 +5169,6 @@ main > .hero--home ~ .section:not(.section--catalogue):not(.hero) {
 
 
 /* Narrow phones: stepper and Add to Quote each take a full row inside the stacked card. */
-@media (max-width: 419px) {
-  .spec-table--quote tr {
-    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-  }
-
-  .spec-table--quote .spec-table__qty,
-  .spec-table--quote .spec-table__add {
-    grid-column: 1 / -1;
-  }
-
-  .spec-table--quote .spec-table__qty {
-    justify-content: flex-start;
-  }
-
-  .spec-table--quote .spec-table__qty .qty {
-    width: 100%;
-    justify-content: space-between;
-  }
-
-  .spec-table--quote .spec-table__add {
-    padding-top: 4px;
-  }
-}
-
 
 /* Explicit backgrounds so contrast is computed against white, never a neighbouring
    dark band (relevant while lazily-rendered panels report placeholder heights). */
@@ -6121,25 +5989,6 @@ main > .hero--home ~ .section:not(.section--catalogue):not(.hero) {
 
 
 /* Phones: let long values (the email address) wrap instead of being cut off. */
-@media (max-width: 639px) {
-  .qc-card {
-    grid-template-columns: 48px minmax(0, 1fr) auto;
-    gap: 12px;
-    padding: 14px 16px;
-  }
-
-  .qc-card__icon {
-    width: 48px;
-    height: 48px;
-  }
-
-  .qc-card__text strong {
-    font-size: 0.95rem;
-    white-space: normal;
-    overflow-wrap: anywhere;
-  }
-}
-
 
 /* Eyebrows on dark cards use the brand red (passes 4.5:1 on black). */
 .map-card .eyebrow,
@@ -6876,38 +6725,6 @@ main > .page-hero--why ~ .section {
 }
 
 
-@media (max-width: 639px) {
-  /* Compact 2-column page list so the book stays near the top of the section. */
-  .page-list {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
-  .page-list button {
-    gap: 8px;
-    padding: 8px;
-    font-size: 0.82rem;
-  }
-
-  .page-list__num {
-    width: 26px;
-    height: 26px;
-    font-size: 0.72rem;
-  }
-
-  /* Keep the fanned pages inside the screen. */
-  .cat-fan {
-    width: 86%;
-  }
-
-  .cat-fan__page--2 {
-    transform: translateX(-78%) rotate(-10deg);
-  }
-
-  .cat-fan__page--3 {
-    transform: translateX(-22%) rotate(9deg);
-  }
-}
-
 
 /* Text on the red card must be solid white (semi-transparent white drops below 4.5:1). */
 .get-cat__card--print .get-cat__text small,
@@ -7276,6 +7093,9 @@ html.is-preloading body {
   display: flex;
   align-items: center;
   justify-self: end;
+  /* Always the last grid column: on mobile the nav is hidden, and without this the
+     actions would sit in the middle track and leave an empty column + gap on the right. */
+  grid-column: 3;
   gap: 10px;
 }
 

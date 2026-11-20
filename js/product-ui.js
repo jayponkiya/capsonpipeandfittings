@@ -47,6 +47,9 @@ export const normalise = (s) =>
     .trim();
 
 const ARROW_ICON = ICONS.arrow;
+/** "+" for the mobile quick-add button (opens a size picker sheet, see js/mobile.js). */
+export const PLUS_ICON =
+  '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>';
 // Plain characters (not SVG): line pages render ~165 steppers, so markup weight matters.
 const PLUS = '+';
 const MINUS = '−';
@@ -87,7 +90,7 @@ export function quoteTableTemplate(p, { caption = true } = {}) {
       const cells = cols
         .map((c, n) =>
           n === 0
-            ? `<th scope="row" class="spec-table__size" data-label="${esc(c.label)}">${esc(row[c.key])}</th>`
+            ? `<th scope="row" class="spec-table__size" data-label="${esc(c.label)}">${esc(row[c.key])}<button class="spec-row__toggle m-only" type="button" aria-expanded="false"><span class="sr-only">Packing and quantity</span></button></th>`
             : `<td data-label="${esc(c.label)}">${esc(row[c.key])}</td>`
         )
         .join('');
@@ -140,6 +143,7 @@ export function cardTemplate(p, { compact = false } = {}) {
             : `<div class="product-card__actions">
           <button class="btn btn--dark btn--sm" type="button" data-open="${p.slug}">Details</button>
           <a class="btn btn--sm" href="${singleQuoteLink(p)}" target="_blank" rel="noopener">${ICONS.whatsapp}Get Quote</a>
+          <button class="product-card__add m-only" type="button" data-quick-add="${p.slug}" aria-label="Add ${esc(p.name)} to quote">${PLUS_ICON}</button>
         </div>`
         }
       </div>

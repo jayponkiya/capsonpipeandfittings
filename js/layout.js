@@ -62,6 +62,12 @@ function menuGroups() {
 
 /* ---------- Templates ---------- */
 
+/** Copyright + designer credit, shared by the footer and the mobile menu. */
+function copyrightHTML() {
+  const year = new Date().getFullYear();
+  return `© ${year} ${esc(BRAND.manufacturer)}. ${BRAND.name}® is a registered trademark. Design and development by <a class="footer__credit" href="https://letvarsolution.com/" target="_blank" rel="noopener">Letvar Solution</a>`;
+}
+
 function headerHTML(groups) {
   const navItems = NAV.map((item) =>
     item.mega
@@ -162,12 +168,12 @@ function headerHTML(groups) {
     <div class="drawer__footer" data-drawer-item>
       <a class="btn" href="contact.html" data-wa>${ICONS.whatsapp}Get Quote on WhatsApp</a>
       <p>${esc(BRAND.manufacturer)}, Shapar, Rajkot<br><a href="mailto:${BRAND.email}">${BRAND.email}</a></p>
+      <p class="drawer__legal">${copyrightHTML()}</p>
     </div>
   </div>`;
 }
 
 function footerHTML() {
-  const year = new Date().getFullYear();
   return `
   <footer class="site-footer">
     <div class="container footer__grid">
@@ -209,7 +215,7 @@ function footerHTML() {
       <p class="footer__terms">${esc(BRAND.terms)}</p>
     </div>
     <div class="container footer__bottom">
-      <p>© ${year} ${esc(BRAND.manufacturer)}. ${BRAND.name}® is a registered trademark. Design and development by <a class="footer__credit" href="https://letvarsolution.com/" target="_blank" rel="noopener">Letvar Solution</a></p>
+      <p>${copyrightHTML()}</p>
       <p>GST No. ${BRAND.gst}</p>
     </div>
   </footer>
